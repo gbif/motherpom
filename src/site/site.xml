@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+
+  <bannerLeft>
+    <name>GBIF</name>
+    <src>http://tools.gbif.org/maven/sites/logo_leaf.gif</src>
+    <href>http://www.gbif.org/</href>
+  </bannerLeft>
+
+  <publishDate position="right"/>
+
+  <version position="right"/>
+
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.0</version>
+  </skin>
+
+  <custom>
+    <fluidoSkin>
+      <twitter>
+        <user>GBIF</user>
+      </twitter>
+    </fluidoSkin>
+  </custom>
+
+  <body>
+    <breadcrumbs>
+      <item name="GBIF" href="http://www.gbif.org"/>
+    </breadcrumbs>
+
+    <menu ref="reports" inherit="bottom"/>
+    <menu ref="modules" inherit="bottom"/>
+
+    <menu name="GBIF Projects" inherit="bottom">
+      <item name="Common Resources" href="http://code.google.com/p/gbif-common-resources/"/>
+      <item name="Crawler" href="http://code.google.com/p/gbif-crawler/"/>
+      <item name="Darwin Core" href="http://code.google.com/p/darwincore/"/>
+      <item name="Data Portal (new)" href="http://code.google.com/p/gbif-portal/"/>
+      <item name="Data Portal (old)" href="http://code.google.com/p/gbif-dataportal/"/>
+      <item name="ECAT" href="http://code.google.com/p/gbif-ecat/"/>
+      <item name="Harvesting and Indexing Toolkit" href="http://code.google.com/p/gbif-indexingtoolkit/"/>
+      <item name="Integrated Publishing Toolkit" href="http://code.google.com/p/gbif-providertoolkit/"/>
+      <item name="Metadata Catalogoue" href="http://code.google.com/p/gbif-metadata/"/>
+      <item name="Metrics" href="http://code.google.com/p/gbif-metrics"/>
+      <item name="OccurrenceStore" href="http://code.google.com/p/gbif-occurrencestore/"/>
+      <item name="Registry" href="http://code.google.com/p/gbif-registry/"/>
+    </menu>
+  </body>
+</project>
