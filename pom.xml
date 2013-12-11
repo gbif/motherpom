@@ -4,11 +4,11 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>12-SNAPSHOT</version>
+  <version>13-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
-  <url>http://sites.gbif.org/common-resources/motherpom</url>
+  <url>http://github.org/common-resources/motherpom</url>
 
   <prerequisites>
     <maven>2.2.1</maven>
@@ -66,7 +66,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://tools.gbif.org/maven/sites/license.txt</url>
+      <url>https://raw.github.com/gbif/motherpom/master/LICENSE</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -77,7 +77,13 @@
   </organization>
 
   <scm>
-    <connection>scm:svn:http://gbif-common-resources.googlecode.com/svn/motherpom/trunk</connection>
+    <connection>scm:git:git@github.com:gbit/motherpom.git</connection>
+    <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
+    <url>http://github.com/gbif/motherpom</url>
+  </scm>
+  
+  <scm>
+    <connection>scm:git:git://github.com/gbif/motherpom</connection>
     <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/motherpom/trunk
     </developerConnection>
     <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/motherpom/trunk</url>
@@ -104,6 +110,10 @@
       <id>gbif-snapshot</id>
       <url>http://repository.gbif.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <site>
+      <id>gh-pages</id>
+      <url>http://gbif.github.io/motherpom</url>
+    </site>
   </distributionManagement>
 
   <build>
