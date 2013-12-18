@@ -10,6 +10,12 @@
   <name>GBIF Mother POM</name>
   <url>http://github.org/gbif/${project.artifactId}</url>
 
+  <scm>
+    <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
+    <url>https://github.com/gbif/motherpom</url>
+    <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
+  </scm>
+
   <prerequisites>
     <maven>2.2.1</maven>
   </prerequisites>
@@ -81,12 +87,6 @@
     <name>Global Biodiversity Information Facility</name>
     <url>http://www.gbif.org</url>
   </organization>
-
-  <scm>
-    <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
-    <url>https://github.com/gbif/motherpom</url>
-    <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
-  </scm>
 
   <issueManagement>
     <system>JIRA</system>
@@ -291,6 +291,9 @@
           <configuration>
             <useReleaseProfile>true</useReleaseProfile>
             <releaseProfiles>gbif-release</releaseProfiles>
+            <!--
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            -->
           </configuration>
         </plugin>
         <plugin>
@@ -563,11 +566,6 @@
           <docfilessubdirs>true</docfilessubdirs>
           <quiet>true</quiet>
           <linksource>true</linksource>
-          <links>
-            <link>http://freemarker.org/docs/api</link>
-            <link>http://docs.guava-libraries.googlecode.com/git/javadoc</link>
-            <link>http://findbugs.sourceforge.net/api</link>
-          </links>
         </configuration>
       </plugin>
     </plugins>
