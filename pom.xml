@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
-  <url>http://github.org/common-resources/motherpom</url>
+  <url>http://github.org/gbif/${project.artifactId}</url>
 
   <prerequisites>
     <maven>2.2.1</maven>
@@ -23,6 +23,8 @@
     <cargo.containerId>tomcat7x</cargo.containerId>
     <cargo.containerType>remote</cargo.containerType>
     <cargo.context>${project.artifactId}</cargo.context>
+
+    <github.global.server>github</github.global.server>
 
     <!--
     Plugin versions.
@@ -48,10 +50,11 @@
     <maven-release-plugin.version>2.4.2</maven-release-plugin.version>
     <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
     <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
+    <ghsite-maven-plugin>0.9</ghsite-maven-plugin>
     <maven-site-plugin.version>3.3</maven-site-plugin.version>
+    <doxia-module-markdown.version>1.4</doxia-module-markdown.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
-    <wagon-ssh.version>2.4</wagon-ssh.version>
     <maven-war-plugin.version>2.4</maven-war-plugin.version>
     <rpm-maven-plugin.version>2.0.1</rpm-maven-plugin.version>
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
@@ -80,9 +83,9 @@
   </organization>
 
   <scm>
-    <connection>scm:git:git@github.com:gbit/motherpom.git</connection>
+    <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
+    <url>https://github.com/gbif/motherpom</url>
     <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
-    <url>http://github.com/gbif/motherpom</url>
   </scm>
 
   <issueManagement>
@@ -106,15 +109,51 @@
       <id>gbif-snapshot</id>
       <url>http://repository.gbif.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <site>
-      <id>gh-pages</id>
-      <url>http://gbif.github.io/motherpom</url>
-    </site>
   </distributionManagement>
 
   <build>
     <pluginManagement>
       <plugins>
+        <!-- build sites for github pages -->
+        <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>${ghsite-maven-plugin}</version>
+          <configuration>
+            <server>github</server>
+            <repositoryOwner>gbif</repositoryOwner>
+            <message>Generated site for ${project.artifactId} ${project.version}</message>
+            <!-- use subfolders for multi module projects
+            <path>${project.distributionManagement.site.url}</path>
+            -->
+            <merge>false</merge>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>site</goal>
+              </goals>
+              <phase>site-deploy</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
+          <configuration>
+            <locales>en</locales>
+            <skipDeploy>true</skipDeploy>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-module-markdown</artifactId>
+              <version>${doxia-module-markdown.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-archetype-plugin</artifactId>
@@ -263,21 +302,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
           <version>${maven-scm-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>${maven-site-plugin.version}</version>
-          <configuration>
-            <locales>en</locales>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.wagon</groupId>
-              <artifactId>wagon-ssh</artifactId>
-              <version>${wagon-ssh.version}</version>
-            </dependency>
-          </dependencies>
         </plugin>
         <plugin>
           <!--
@@ -507,6 +531,13 @@
         <!-- end RPM plugins -->
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 
   <reporting>

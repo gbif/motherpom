@@ -5,7 +5,7 @@
 
   <bannerLeft>
     <name>GBIF</name>
-    <src>http://tools.gbif.org/maven/sites/logo_leaf.gif</src>
+    <src>http://cdn.gbif.org/img/header/logo.png</src>
     <href>http://www.gbif.org/</href>
   </bannerLeft>
 
@@ -35,19 +35,12 @@
     <menu ref="reports" inherit="bottom"/>
     <menu ref="modules" inherit="bottom"/>
 
-    <menu name="GBIF Projects" inherit="bottom">
-      <item name="Common Resources" href="http://code.google.com/p/gbif-common-resources/"/>
-      <item name="Crawler" href="http://code.google.com/p/gbif-crawler/"/>
-      <item name="Darwin Core" href="http://code.google.com/p/darwincore/"/>
-      <item name="Data Portal (new)" href="http://code.google.com/p/gbif-portal/"/>
-      <item name="Data Portal (old)" href="http://code.google.com/p/gbif-dataportal/"/>
-      <item name="ECAT" href="http://code.google.com/p/gbif-ecat/"/>
-      <item name="Harvesting and Indexing Toolkit" href="http://code.google.com/p/gbif-indexingtoolkit/"/>
-      <item name="Integrated Publishing Toolkit" href="http://code.google.com/p/gbif-providertoolkit/"/>
-      <item name="Metadata Catalogoue" href="http://code.google.com/p/gbif-metadata/"/>
-      <item name="Metrics" href="http://code.google.com/p/gbif-metrics"/>
-      <item name="OccurrenceStore" href="http://code.google.com/p/gbif-occurrencestore/"/>
-      <item name="Registry" href="http://code.google.com/p/gbif-registry/"/>
+    <menu name="Developer Resources" inherit="bottom">
+      <item name="Github" href="http://www.github.com/gbif"/>
+      <item name="Developer Blog" href="http://gbif.blogspot.de/"/>
+      <item name="GBIF API documentation" href="http://www.gbif.org/developer"/>
+      <item name="GBIF API JavaDocs" href="http://gbif.github.io/gbif-api/apidocs/"/>
+      <item name="DwC API JavaDocs" href="http://gbif.github.io/dwc-api/apidocs/"/>
     </menu>
   </body>
 </project>
