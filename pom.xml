@@ -4,7 +4,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>14-SNAPSHOT</version>
+  <version>15-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
@@ -65,15 +65,6 @@
     <maven-war-plugin.version>2.4</maven-war-plugin.version>
     <rpm-maven-plugin.version>2.0.1</rpm-maven-plugin.version>
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
-
-    <!-- RPM property defaults (see comment on "rpm-possible" profile, below) -->
-    <rpm.username>gbif</rpm.username>
-    <rpm.groupname>gbif</rpm.groupname>
-    <rpm.path>/usr/local/${rpm.appname}</rpm.path>
-    <jsw.dir>${project.build.directory}/generated-resources/appassembler/jsw/${rpm.appname}</jsw.dir>
-    <!-- phase defaults help ensure RPMing will only happen on linux -->
-    <jsw.phase>none</jsw.phase>
-    <rpm.phase>none</rpm.phase>
   </properties>
 
   <licenses>
@@ -364,175 +355,6 @@
           <artifactId>jetty-maven-plugin</artifactId>
           <version>${jetty-maven-plugin.version}</version>
         </plugin>
-
-        <!-- these plugins for RPM building (see comment on "rpm-possible" profile, below) -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>${appassembler-maven-plugin.version}</version>
-          <configuration>
-            <repositoryLayout>flat</repositoryLayout>
-            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-            <platforms>
-              <platform>unix</platform>
-            </platforms>
-            <daemons>
-              <daemon>
-                <id>${rpm.appname}</id>
-                <mainClass>${rpm.mainclass}</mainClass>
-                <platforms>
-                  <platform>jsw</platform>
-                </platforms>
-                <generatorConfigurations>
-                  <generatorConfiguration>
-                    <generator>jsw</generator>
-                    <includes>
-                      <include>linux-x86-64</include>
-                    </includes>
-                    <configuration>
-                      <property>
-                        <name>wrapper.java.command</name>
-                        <value>/usr/bin/java</value>
-                      </property>
-                      <property>
-                        <name>wrapper.logfile</name>
-                        <value>logs/wrapper.log</value>
-                      </property>
-                    </configuration>
-                  </generatorConfiguration>
-                </generatorConfigurations>
-              </daemon>
-            </daemons>
-          </configuration>
-          <executions>
-            <execution>
-              <id>generate-jsw-scripts</id>
-              <phase>${jsw.phase}</phase>
-              <goals>
-                <goal>generate-daemons</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>rpm-maven-plugin</artifactId>
-          <version>${rpm-maven-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>generate-rpm</id>
-              <phase>${rpm.phase}</phase>
-              <goals>
-                <goal>rpm</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <copyright>2012, GBIF</copyright>
-            <group>GBIF</group>
-            <description>${rpm.appname}: RPM Package</description>
-            <needarch>x86_64</needarch>
-            <mappings>
-              <mapping>
-                <directory>${rpm.path}/bin</directory>
-                <filemode>774</filemode>
-                <username>${rpm.username}</username>
-                <groupname>${rpm.groupname}</groupname>
-                <sources>
-                  <source>
-                    <location>${jsw.dir}/bin</location>
-                    <excludes>
-                      <exclude>*.bat</exclude>
-                      <exclude>*.exe</exclude>
-                    </excludes>
-                  </source>
-                </sources>
-              </mapping>
-              <mapping>
-                <directory>${rpm.path}/conf</directory>
-                <configuration>true</configuration>
-                <filemode>664</filemode>
-                <username>${rpm.username}</username>
-                <groupname>${rpm.groupname}</groupname>
-                <sources>
-                  <source>
-                    <location>${jsw.dir}/conf</location>
-                  </source>
-                </sources>
-              </mapping>
-              <mapping>
-                <directory>${rpm.path}/lib</directory>
-                <filemode>664</filemode>
-                <username>${rpm.username}</username>
-                <groupname>${rpm.groupname}</groupname>
-                <sources>
-                  <source>
-                    <location>${jsw.dir}/lib</location>
-                  </source>
-                </sources>
-              </mapping>
-              <mapping>
-                <directory>${rpm.path}/logs</directory>
-                <filemode>664</filemode>
-                <username>${rpm.username}</username>
-                <groupname>${rpm.groupname}</groupname>
-              </mapping>
-            </mappings>
-            <preinstall>echo Installing ${rpm.appname} ...</preinstall>
-            <postinstall>
-              echo Setting dir permissions
-              chmod 770 ${rpm.path}
-              chmod 770 ${rpm.path}/*
-              chown -R ${rpm.username}.${rpm.groupname} ${rpm.path}
-
-              echo Configuring ${rpm.appname} init scripts
-              #!/bin/sh
-              ln -s ${rpm.path}/bin/${rpm.appname} /etc/init.d/${rpm.appname}
-
-              # configure chkconfig install
-              if [ -x /sbin/chkconfig ]; then
-              /sbin/chkconfig --add ${rpm.appname}
-              else
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc3.d/S20${rpm.appname}
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc5.d/S20${rpm.appname}
-
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc0.d/K10${rpm.appname}
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc1.d/K10${rpm.appname}
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc2.d/K10${rpm.appname}
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc4.d/K10${rpm.appname}
-              ln -sf /etc/init.d/${rpm.appname} /etc/rc.d/rc6.d/K10${rpm.appname}
-              fi
-
-              echo Starting ${rpm.appname}
-              su -c 'service ${rpm.appname} start' ${rpm.username}
-            </postinstall>
-            <preremove>
-              echo Removing ${rpm.appname} ...
-
-              #chkconfig scripts removal
-              #only on uninstall, not on upgrades.
-              if [ $1 = 0 ]; then
-              /etc/init.d/${rpm.appname} stop
-              if [ -x /sbin/chkconfig ]; then
-              echo "chkconfig --del ${rpm.appname}"
-              /sbin/chkconfig --del ${rpm.appname}
-              else
-              echo "Deleting /etc/rc.d/rc?.d/???${rpm.appname}"
-              rm -f /etc/rc.d/rc?.d/???${rpm.appname}
-              fi
-              fi
-            </preremove>
-
-            <postremove>
-              echo "Deleting /etc/init.d/${rpm.appname}"
-              rm /etc/init.d/${rpm.appname}
-              echo "Deleting ${rpm.path}"
-              rm -Rf ${rpm.path}
-              echo ${rpm.appname} is Successfully Removed!
-            </postremove>
-          </configuration>
-        </plugin>
-        <!-- end RPM plugins -->
       </plugins>
     </pluginManagement>
 
@@ -781,36 +603,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <!--
-      As per http://dev.gbif.org/issues/browse/GBIFMPOM-10 this profile is activated when on linux, with the hope that
-      "linux" means it will have rpmbuild. If the appassembler and rpm plugins have been referenced in a child pom
-      then Java Service Wrapper scripts will be generated and an RPM built out of the result. For this to work the child
-      must declare the following properties:
-
-      <rpm.appname> (e.g. occurrence-processor)
-      <rpm.mainclass> (e.g. org.gbif.cli.Application)
-
-      and may override the following properties, which are set to reasonable defaults in this pom:
-
-      <rpm.username>
-      <rpm.groupname>
-      <rpm.path>
-      <jsw.dir>
-    -->
-    <profile>
-      <id>rpm-possible</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <os>
-          <name>linux</name>
-          <family>unix</family>
-        </os>
-      </activation>
-      <properties>
-        <jsw.phase>package</jsw.phase>
-        <rpm.phase>package</rpm.phase>
-      </properties>
     </profile>
   </profiles>
 </project>
