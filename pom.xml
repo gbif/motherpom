@@ -4,7 +4,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>15-SNAPSHOT</version>
+  <version>14-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
@@ -18,11 +18,11 @@
   </scm>
 
   <prerequisites>
-    <maven>2.2.1</maven>
+    <maven>${requiredMavenVersion}</maven>
   </prerequisites>
 
   <properties>
-    <requiredMavenVersion>[2.2,)</requiredMavenVersion>
+    <requiredMavenVersion>3.0.5</requiredMavenVersion>
     <jdkLevel>1.6</jdkLevel>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -39,8 +39,8 @@
     -->
     <appassembler-maven-plugin.version>1.6</appassembler-maven-plugin.version>
     <cargo-maven2-plugin.version>1.4.5</cargo-maven2-plugin.version>
-    <jetty-maven-plugin.version>9.0.6.v20130930</jetty-maven-plugin.version>
-    <liquibase-maven-plugin.version>2.0.5</liquibase-maven-plugin.version>
+    <jetty-maven-plugin.version>9.1.0.v20131115</jetty-maven-plugin.version>
+    <liquibase-maven-plugin.version>3.0.8</liquibase-maven-plugin.version>
     <maven-archetype-plugin.version>2.2</maven-archetype-plugin.version>
     <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
@@ -63,7 +63,6 @@
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
     <maven-war-plugin.version>2.4</maven-war-plugin.version>
-    <rpm-maven-plugin.version>2.0.1</rpm-maven-plugin.version>
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
   </properties>
 
@@ -145,7 +144,6 @@
             </dependency>
           </dependencies>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-archetype-plugin</artifactId>
@@ -198,6 +196,24 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>${maven-enforcer-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>enforce-maven-3</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>[${requiredMavenVersion},)</version>
+                  </requireMavenVersion>
+                  <requireJavaVersion>
+                    <version>[${jdkLevel},)</version>
+                  </requireJavaVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -363,6 +379,10 @@
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
@@ -396,6 +416,7 @@
 
   <profiles>
     <profile>
+      <!-- profile gets activated when maven job is run inside jenkins due to the presence of the BUILD_NUMBER variable -->
       <id>gbif-jenkins</id>
       <activation>
         <property>
@@ -439,10 +460,22 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <artifactId>maven-site-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-descriptor</id>
+                <goals>
+                  <goal>attach-descriptor</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
     <profile>
+      <!-- automatically used by the release plugin -->
       <id>gbif-release</id>
       <build>
         <plugins>
@@ -459,7 +492,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>${requiredMavenVersion}</version>
+                  <version>[${requiredMavenVersion},)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[${jdkLevel},)</version>
@@ -504,30 +537,6 @@
                 <goals>
                   <goal>jar-no-fork</goal>
                   <goal>test-jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>maven-3</id>
-      <activation>
-        <file>
-          <!--  This employs that the basedir expression is only recognized by Maven 3.x (see MNG-2363) -->
-          <exists>${basedir}</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-site-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-descriptor</id>
-                <goals>
-                  <goal>attach-descriptor</goal>
                 </goals>
               </execution>
             </executions>
