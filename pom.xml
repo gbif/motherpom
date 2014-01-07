@@ -18,11 +18,11 @@
   </scm>
 
   <prerequisites>
-    <maven>${requiredMavenVersion}</maven>
+    <maven>${minimumMavenVersion}</maven>
   </prerequisites>
 
   <properties>
-    <requiredMavenVersion>3.0.5</requiredMavenVersion>
+    <minimumMavenVersion>3.0</minimumMavenVersion>
     <jdkLevel>1.6</jdkLevel>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -205,7 +205,7 @@
               <configuration>
                 <rules>
                   <requireMavenVersion>
-                    <version>[${requiredMavenVersion},)</version>
+                    <version>[${minimumMavenVersion},)</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
                     <version>[${jdkLevel},)</version>
@@ -492,7 +492,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>[${requiredMavenVersion},)</version>
+                  <version>[${minimumMavenVersion},)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[${jdkLevel},)</version>
