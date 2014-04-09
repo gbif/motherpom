@@ -613,5 +613,39 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <!-- profile to publish maven site to github pages. Execute via mvn -P gh-pages site-deploy-->
+      <id>gh-pages</id>
+      <build>
+       <plugins>
+         <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-site-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>site</phase>
+               <goals>
+                 <goal>site</goal>
+               </goals>
+             </execution>
+           </executions>
+         </plugin>
+         <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-scm-publish-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>site-deploy</phase>
+               <goals>
+                 <goal>publish-scm</goal>
+               </goals>
+             </execution>
+           </executions>
+         </plugin>
+       </plugins>
+      </build>
+    </profile>
+
   </profiles>
 </project>
