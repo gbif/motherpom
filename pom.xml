@@ -54,14 +54,15 @@
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
     <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
-    <maven-release-plugin.version>2.4.2</maven-release-plugin.version>
+    <maven-release-plugin.version>2.5</maven-release-plugin.version>
     <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-    <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
-    <ghsite-maven-plugin>0.9</ghsite-maven-plugin>
+    <maven-scm-plugin.version>1.9</maven-scm-plugin.version>
+    <maven-scm-publish-plugin.version>1.0</maven-scm-publish-plugin.version>
     <maven-site-plugin.version>3.3</maven-site-plugin.version>
     <doxia-module-markdown.version>1.4</doxia-module-markdown.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+    <maven-wagon-ssh-plugin.version>2.2</maven-wagon-ssh-plugin.version>
     <maven-war-plugin.version>2.4</maven-war-plugin.version>
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
   </properties>
@@ -103,31 +104,18 @@
   </distributionManagement>
 
   <build>
+
+    <extensions>
+      <extension>
+        <!-- add support for ssh/scp -->
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>${maven-wagon-ssh-plugin.version}</version>
+      </extension>
+    </extensions>
+
     <pluginManagement>
       <plugins>
-        <!-- build sites for github pages -->
-        <plugin>
-          <groupId>com.github.github</groupId>
-          <artifactId>site-maven-plugin</artifactId>
-          <version>${ghsite-maven-plugin}</version>
-          <configuration>
-            <server>github</server>
-            <repositoryOwner>gbif</repositoryOwner>
-            <message>Generated site for ${project.artifactId} ${project.version}</message>
-            <!-- use subfolders for multi module projects
-            <path>${project.distributionManagement.site.url}</path>
-            -->
-            <merge>false</merge>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>site</goal>
-              </goals>
-              <phase>site-deploy</phase>
-            </execution>
-          </executions>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
@@ -143,6 +131,23 @@
               <version>${doxia-module-markdown.version}</version>
             </dependency>
           </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-publish-plugin</artifactId>
+          <version>${maven-scm-publish-plugin.version}</version>
+          <inherited>true</inherited>
+          <configuration>
+            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+            <!-- Plugins defaults to "target/staging" and since the distributionManagement section is a pain in the ass for site docs, this is easier -->
+            <content>${project.reporting.outputDirectory}</content>
+            <skipDeletedFiles>true</skipDeletedFiles>
+            <!-- publish to same git repo as code, just use a different branch -->
+            <pubScmUrl>${project.scm.connection}</pubScmUrl>
+            <!-- This is the git branch that the web "pages" are located in -->
+            <scmBranch>gh-pages</scmBranch>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -375,10 +380,6 @@
     </pluginManagement>
 
     <plugins>
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
