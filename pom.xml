@@ -54,7 +54,10 @@
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
     <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
-    <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+    <!-- maven-resoruce-plugin 2.7 has a bug with slf4j, so dont use it!
+    https://bugzilla.redhat.com/show_bug.cgi?id=1077375
+    -->
+    <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
     <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
     <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
     <maven-site-plugin.version>3.4</maven-site-plugin.version>
