@@ -37,23 +37,23 @@
     Plugin versions.
     Check for available updates: mvn versions:display-plugin-updates
     -->
-    <cargo-maven2-plugin.version>1.4.11</cargo-maven2-plugin.version>
+    <cargo-maven2-plugin.version>1.4.13</cargo-maven2-plugin.version>
     <jetty-maven-plugin.version>9.2.6.v20141205</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.3.2</liquibase-maven-plugin.version>
-    <maven-archetype-plugin.version>2.2</maven-archetype-plugin.version>
+    <maven-archetype-plugin.version>2.3</maven-archetype-plugin.version>
     <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
     <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
     <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
-    <maven-dependency-plugin.version>2.9</maven-dependency-plugin.version>
+    <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
-    <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
+    <maven-enforcer-plugin.version>1.4</maven-enforcer-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-    <maven-jar-plugin.version>2.5</maven-jar-plugin.version>
+    <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
 	<!-- javadoc plugin 2.10.x gives jenkins build errors, avoid it! -->
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
-    <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
+    <maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
     <!-- maven-resoruce-plugin 2.7 has a bug with slf4j, so dont use it!
     https://bugzilla.redhat.com/show_bug.cgi?id=1077375
@@ -66,7 +66,7 @@
     <maven-source-plugin.version>2.4</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
     <maven-wagon-ssh-plugin.version>2.2</maven-wagon-ssh-plugin.version>
-    <maven-war-plugin.version>2.5</maven-war-plugin.version>
+    <maven-war-plugin.version>2.6</maven-war-plugin.version>
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
   </properties>
 
@@ -127,6 +127,14 @@
             <locales>en</locales>
             <skipDeploy>true</skipDeploy>
           </configuration>
+          <executions>
+            <execution>
+              <id>attach-descriptor</id>
+              <goals>
+                <goal>attach-descriptor</goal>
+              </goals>
+            </execution>
+          </executions>
           <dependencies>
             <dependency>
               <groupId>org.apache.maven.doxia</groupId>
@@ -631,6 +639,12 @@
                <phase>site</phase>
                <goals>
                  <goal>site</goal>
+               </goals>
+             </execution>
+             <execution>
+               <id>attach-descriptor</id>
+               <goals>
+                 <goal>attach-descriptor</goal>
                </goals>
              </execution>
            </executions>
