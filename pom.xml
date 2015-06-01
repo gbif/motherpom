@@ -4,7 +4,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>21-SNAPSHOT</version>
+  <version>21</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
@@ -14,7 +14,7 @@
     <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
     <url>https://github.com/gbif/motherpom</url>
     <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>motherpom-21</tag>
   </scm>
 
   <prerequisites>
