@@ -38,7 +38,7 @@
     Check for available updates: mvn versions:display-plugin-updates
     -->
     <cargo-maven2-plugin.version>1.4.13</cargo-maven2-plugin.version>
-    <jetty-maven-plugin.version>9.2.11.v20150529</jetty-maven-plugin.version>
+    <jetty-maven-plugin.version>9.2.2.v20140723</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.3.2</liquibase-maven-plugin.version>
     <maven-archetype-plugin.version>2.3</maven-archetype-plugin.version>
     <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
