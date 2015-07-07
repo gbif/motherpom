@@ -250,10 +250,15 @@
             </execution>
           </executions>
           <configuration>
-            <forkMode>always</forkMode>
+            <!--
+            Use a single forked process to execute all tests
+            See https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+            -->
+            <forkCount>1</forkCount>
+            <reuseForks>true</reuseForks>
+            <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <argLine>-Xmx256m</argLine>
-            <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
             <runOrder>random</runOrder>
           </configuration>
         </plugin>
