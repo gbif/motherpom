@@ -107,7 +107,6 @@
   </distributionManagement>
 
   <build>
-
     <extensions>
       <extension>
         <!-- add support for ssh/scp -->
