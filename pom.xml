@@ -321,7 +321,7 @@
           <version>${maven-release-plugin.version}</version>
           <configuration>
             <useReleaseProfile>true</useReleaseProfile>
-            <releaseProfiles>gbif-release</releaseProfiles>
+            <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
             <!--
             <autoVersionSubmodules>true</autoVersionSubmodules>
             -->
