@@ -320,6 +320,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>${maven-release-plugin.version}</version>
           <configuration>
+            <goals>deploy site-deploy</goals>
             <useReleaseProfile>true</useReleaseProfile>
             <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
             <!--
