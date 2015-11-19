@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.gbif</groupId>
@@ -38,10 +39,9 @@
     Check for available updates: mvn versions:display-plugin-updates
     -->
     <cargo-maven2-plugin.version>1.4.13</cargo-maven2-plugin.version>
-    <jetty-maven-plugin.version>9.2.2.v20140723</jetty-maven-plugin.version>
+    <jetty-maven-plugin.version>9.3.6.v20151106</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.3.2</liquibase-maven-plugin.version>
     <maven-archetype-plugin.version>2.3</maven-archetype-plugin.version>
-    <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
     <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
     <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
@@ -50,7 +50,7 @@
     <maven-enforcer-plugin.version>1.4</maven-enforcer-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-	<!-- javadoc plugin 2.10.x gives jenkins build errors, avoid it! -->
+    <!-- javadoc plugin 2.10.x gives jenkins build errors, avoid it! -->
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
     <maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
@@ -106,6 +106,15 @@
     </snapshotRepository>
     <site>
       <id>gh-pages</id>
+      <!--
+      You need to override this default for multimodule projects!
+      For multi module proejcts please use this in the main pom:
+        <url>http://gbif.github.io/${project.artifactId}/</url>
+
+      and this for the submodules:
+        <url>http://gbif.github.io/${parent.artifactId}/${project.artifactId}/</url>
+
+      -->
       <url>http://gbif.github.io/${project.artifactId}/</url>
     </site>
   </distributionManagement>
@@ -124,57 +133,8 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>${maven-site-plugin.version}</version>
-          <configuration>
-            <locales>en</locales>
-            <skipDeploy>true</skipDeploy>
-          </configuration>
-          <executions>
-            <execution>
-              <id>attach-descriptor</id>
-              <goals>
-                <goal>attach-descriptor</goal>
-              </goals>
-            </execution>
-          </executions>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.doxia</groupId>
-              <artifactId>doxia-module-markdown</artifactId>
-              <version>${doxia-module-markdown.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-scm-publish-plugin</artifactId>
-          <version>${maven-scm-publish-plugin.version}</version>
-          <inherited>true</inherited>
-          <configuration>
-            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
-            <!-- Plugins defaults to "target/staging" and since the distributionManagement section is a pain in the ass for site docs, this is easier -->
-            <content>${project.reporting.outputDirectory}</content>
-            <skipDeletedFiles>true</skipDeletedFiles>
-            <!-- publish to same git repo as code, just use a different branch -->
-            <pubScmUrl>${project.scm.connection}</pubScmUrl>
-            <!-- This is the git branch that the web "pages" are located in -->
-            <scmBranch>gh-pages</scmBranch>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-archetype-plugin</artifactId>
           <version>${maven-archetype-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>${maven-assembly-plugin.version}</version>
-          <configuration>
-            <tarLongFileMode>gnu</tarLongFileMode>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -293,54 +253,52 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${maven-javadoc-plugin.version}</version>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
           <configuration>
-            <failOnError>false</failOnError>
-            <docfilessubdirs>true</docfilessubdirs>
-            <quiet>true</quiet>
-            <linksource>true</linksource>
-            <links>
-              <link>http://freemarker.org/docs/api</link>
-              <link>http://docs.guava-libraries.googlecode.com/git/javadoc</link>
-              <link>http://findbugs.sourceforge.net/api</link>
-            </links>
+            <locales>en</locales>
+            <skipDeploy>true</skipDeploy>
           </configuration>
           <executions>
             <execution>
-              <id>attach-javadocs</id>
+              <id>attach-descriptor</id>
               <goals>
-                <goal>jar</goal>
-                <goal>test-jar</goal>
+                <goal>attach-descriptor</goal>
               </goals>
-              <configuration>
-                <additionalparam>-Xdoclint:none</additionalparam>
-              </configuration>
             </execution>
           </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-module-markdown</artifactId>
+              <version>${doxia-module-markdown.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>${maven-release-plugin.version}</version>
+          <artifactId>maven-scm-publish-plugin</artifactId>
+          <version>${maven-scm-publish-plugin.version}</version>
+          <inherited>true</inherited>
           <configuration>
-            <goals>deploy site-deploy</goals>
-            <useReleaseProfile>true</useReleaseProfile>
-            <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
-            <!--
-            <autoVersionSubmodules>true</autoVersionSubmodules>
-            -->
+            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+            <skipDeletedFiles>false</skipDeletedFiles>
+            <!-- publish to same git repo as code, just use a different branch -->
+            <pubScmUrl>${project.scm.connection}</pubScmUrl>
+            <!-- This is the git branch that the web "pages" are located in -->
+            <scmBranch>gh-pages</scmBranch>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${maven-resources-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
           <version>${maven-scm-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
         </plugin>
         <plugin>
           <!--
@@ -396,12 +354,22 @@
           <version>${liquibase-maven-plugin.version}</version>
         </plugin>
         <plugin>
-          <!--
-            http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html
-          -->
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
           <version>${jetty-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${maven-release-plugin.version}</version>
+          <configuration>
+            <goals>deploy site site:stage scm-publish:publish-scm</goals>
+            <useReleaseProfile>true</useReleaseProfile>
+            <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
+            <!--
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            -->
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -443,9 +411,19 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
         <configuration>
+          <failOnError>false</failOnError>
           <docfilessubdirs>true</docfilessubdirs>
           <quiet>true</quiet>
           <linksource>true</linksource>
+          <additionalparam>-Xdoclint:none</additionalparam>
+          <aggregate>true</aggregate>
+          <!--
+          <links>
+              <link>http://freemarker.org/docs/api</link>
+              <link>http://docs.guava-libraries.googlecode.com/git/javadoc</link>
+              <link>http://findbugs.sourceforge.net/api</link>
+          </links>
+          -->
         </configuration>
       </plugin>
     </plugins>
@@ -644,38 +622,38 @@
       <!-- profile to publish maven site to github pages. Execute via mvn -P gh-pages site-deploy-->
       <id>gh-pages</id>
       <build>
-       <plugins>
-         <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-site-plugin</artifactId>
-           <executions>
-             <execution>
-               <phase>site</phase>
-               <goals>
-                 <goal>stage</goal>
-               </goals>
-             </execution>
-             <execution>
-               <id>attach-descriptor</id>
-               <goals>
-                 <goal>attach-descriptor</goal>
-               </goals>
-             </execution>
-           </executions>
-         </plugin>
-         <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-scm-publish-plugin</artifactId>
-           <executions>
-             <execution>
-               <phase>site-deploy</phase>
-               <goals>
-                 <goal>publish-scm</goal>
-               </goals>
-             </execution>
-           </executions>
-         </plugin>
-       </plugins>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>site</phase>
+                <goals>
+                  <goal>stage</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>attach-descriptor</id>
+                <goals>
+                  <goal>attach-descriptor</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-publish-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>site-deploy</phase>
+                <goals>
+                  <goal>publish-scm</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
 
