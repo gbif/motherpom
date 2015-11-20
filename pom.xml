@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.gbif</groupId>
@@ -49,7 +50,6 @@
     <maven-enforcer-plugin.version>1.4</maven-enforcer-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-    <!-- javadoc plugin 2.10.x gives jenkins build errors, avoid it! -->
     <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
     <maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
@@ -286,16 +286,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
           <version>${maven-scm-publish-plugin.version}</version>
-          <inherited>true</inherited>
-          <configuration>
-            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
-            <skipDeletedFiles>false</skipDeletedFiles>
-            <!-- publish to same git repo as code, just use a different branch -->
-            <pubScmUrl>${project.scm.connection}</pubScmUrl>
-            <!-- This is the git branch that the web "pages" are located in -->
-            <scmBranch>gh-pages</scmBranch>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -320,7 +310,6 @@
               <id>attach-sources</id>
               <phase>package</phase>
               <goals>
-                <!-- produce source artifact for main project sources -->
                 <goal>jar-no-fork</goal>
               </goals>
             </execution>
@@ -367,18 +356,18 @@
           <artifactId>jetty-maven-plugin</artifactId>
           <version>${jetty-maven-plugin.version}</version>
         </plugin>
-        <!--
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <version>${maven-release-plugin.version}</version>
           <configuration>
-            <goals>deploy</goals>
+            <goals>deploy site site:stage scm-publish:publish-scm</goals>
+            <preparationGoals>install</preparationGoals>
+            <resume>false</resume>
             <useReleaseProfile>true</useReleaseProfile>
-            <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
+            <releaseProfiles>gbif-release</releaseProfiles>
           </configuration>
         </plugin>
-    -->
       </plugins>
     </pluginManagement>
 
@@ -426,77 +415,14 @@
           <linksource>true</linksource>
           <show>public</show>
           <aggregate>false</aggregate>
-          <!--
-          <links>
-              <link>http://freemarker.org/docs/api</link>
-              <link>http://docs.guava-libraries.googlecode.com/git/javadoc</link>
-              <link>http://findbugs.sourceforge.net/api</link>
-          </links>
-          -->
         </configuration>
-        <reportSets>
-          <reportSet>
-            <id>non-aggregate</id>
-            <configuration>
-              <!-- Specific configuration for the non aggregate report -->
-            </configuration>
-            <reports>
-              <report>javadoc</report>
-            </reports>
-          </reportSet>
-          <reportSet>
-            <id>aggregate</id>
-            <configuration>
-              <!-- Specific configuration for the aggregate report -->
-            </configuration>
-            <reports>
-              <report>aggregate</report>
-            </reports>
-          </reportSet>
-        </reportSets>
       </plugin>
     </plugins>
   </reporting>
 
   <profiles>
+    <!-- automatically used by the release plugin -->
     <profile>
-      <!-- profile gets activated when maven job is run inside jenkins due to the presence of the BUILD_NUMBER variable -->
-      <id>gbif-jenkins</id>
-      <activation>
-        <property>
-          <name>BUILD_NUMBER</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-test-jar</id>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
-                  <goal>test-jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <!-- automatically used by the release plugin -->
       <id>gbif-release</id>
       <build>
         <plugins>
@@ -528,29 +454,6 @@
             </configuration>
           </plugin>
           <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-test-jar</id>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                  <goal>test-jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
             <artifactId>maven-source-plugin</artifactId>
             <executions>
               <execution>
@@ -562,38 +465,80 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>site</phase>
+                <goals>
+                  <goal>stage</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>attach-descriptor</id>
+                <goals>
+                  <goal>attach-descriptor</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-publish-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>site-deploy</phase>
+                <goals>
+                  <goal>publish-scm</goal>
+                </goals>
+              </execution>
+            </executions>
+            <!-- do not publish submodules -->
+            <inherited>false</inherited>
+            <configuration>
+              <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+              <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+              <skipDeletedFiles>false</skipDeletedFiles>
+              <!-- publish to same git repo as code, just use a different branch -->
+              <pubScmUrl>${project.scm.connection}</pubScmUrl>
+              <!-- This is the git branch that the web "pages" are located in -->
+              <scmBranch>gh-pages</scmBranch>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>
-    <profile>
-      <!--
-        This profile can be used to deploy web applications to our staging server.
-        To use it define a <server> and a <profile> in your Maven settings.xml file like this:
 
-          <profile>
-            <id>deploy-boma</id>
-            <properties>
-              <cargo.deploy-settings>gbif-boma</cargo.deploy-settings>
-              <cargo.containerId>tomcat5x</cargo.containerId>
-            </properties>
-          </profile>
+  <!-- profile to deploy web applications to our staging server -->
+  <profile>
+    <!--
+      To use it define a <server> and a <profile> in your Maven settings.xml file like this:
 
-          <server>
-            <id>gbif-boma</id>
-            <configuration>
-              <cargo.remote.uri>http://boma.gbif.org/manager</cargo.tomcat.manager.url>
-              <cargo.remote.username></cargo.remote.username>
-              <cargo.remote.password></cargo.remote.password>
-            </configuration>
-          </server>
+        <profile>
+          <id>deploy-boma</id>
+          <properties>
+            <cargo.deploy-settings>gbif-boma</cargo.deploy-settings>
+            <cargo.containerId>tomcat5x</cargo.containerId>
+          </properties>
+        </profile>
 
-        You can then deploy: mvn cargo:redeploy -Pdeploy-boma
+        <server>
+          <id>gbif-boma</id>
+          <configuration>
+            <cargo.remote.uri>http://boma.gbif.org/manager</cargo.tomcat.manager.url>
+            <cargo.remote.username></cargo.remote.username>
+            <cargo.remote.password></cargo.remote.password>
+          </configuration>
+        </server>
 
-        The context is your artifactId but it can be overridden by the property cargo.context.
+      You can then deploy: mvn cargo:redeploy -Pdeploy-boma
 
-        Notice that this will automatically skip unless for all projects without a src/main/webapp.
-        See http://dev.gbif.org/issues/browse/GBIFMPOM-8
-      -->
+      The context is your artifactId but it can be overridden by the property cargo.context.
+
+      Notice that this will automatically skip unless for all projects without a src/main/webapp.
+      See http://dev.gbif.org/issues/browse/GBIFMPOM-8
+    -->
       <id>war-deploy</id>
       <activation>
         <file>
@@ -630,45 +575,6 @@
               </deployables>
 
             </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <!-- profile to publish maven site to github pages. Execute via mvn -P gh-pages site-deploy-->
-      <id>gh-pages</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>site</phase>
-                <goals>
-                  <goal>stage</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>attach-descriptor</id>
-                <goals>
-                  <goal>attach-descriptor</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-scm-publish-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>site-deploy</phase>
-                <goals>
-                  <goal>publish-scm</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>
