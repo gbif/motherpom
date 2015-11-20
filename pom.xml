@@ -429,7 +429,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
         <configuration>
-          <includeDependencySources>true</includeDependencySources>
+          <includeDependencySources>false</includeDependencySources>
           <failOnError>false</failOnError>
           <docfilessubdirs>true</docfilessubdirs>
           <quiet>true</quiet>
