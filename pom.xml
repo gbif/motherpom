@@ -286,6 +286,15 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
           <version>${maven-scm-publish-plugin.version}</version>
+          <configuration>
+            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+            <skipDeletedFiles>false</skipDeletedFiles>
+            <!-- publish to same git repo as code, just use a different branch -->
+            <pubScmUrl>${project.scm.connection}</pubScmUrl>
+            <!-- This is the git branch that the web "pages" are located in -->
+            <scmBranch>gh-pages</scmBranch>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -496,15 +505,6 @@
             </executions>
             <!-- do not publish submodules -->
             <inherited>false</inherited>
-            <configuration>
-              <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-              <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
-              <skipDeletedFiles>false</skipDeletedFiles>
-              <!-- publish to same git repo as code, just use a different branch -->
-              <pubScmUrl>${project.scm.connection}</pubScmUrl>
-              <!-- This is the git branch that the web "pages" are located in -->
-              <scmBranch>gh-pages</scmBranch>
-            </configuration>
           </plugin>
         </plugins>
       </build>
