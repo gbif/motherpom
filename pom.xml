@@ -41,6 +41,7 @@
     <jetty-maven-plugin.version>9.3.6.v20151106</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.3.2</liquibase-maven-plugin.version>
     <maven-archetype-plugin.version>2.3</maven-archetype-plugin.version>
+    <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
     <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
     <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
@@ -240,6 +241,12 @@
           <artifactId>maven-shade-plugin</artifactId>
           <version>${maven-shade-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
