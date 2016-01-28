@@ -27,6 +27,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <release.tagNameBase>${project.artifactId}</release.tagNameBase>
+
     <cargo.containerId>tomcat7x</cargo.containerId>
     <cargo.containerType>remote</cargo.containerType>
     <cargo.context>${project.artifactId}</cargo.context>
@@ -394,6 +396,7 @@
             <resume>false</resume>
             <useReleaseProfile>true</useReleaseProfile>
             <releaseProfiles>gbif-release</releaseProfiles>
+            <tagNameFormat>${release.tagNameBase}-@{project.version}</tagNameFormat>
           </configuration>
         </plugin>
       </plugins>
