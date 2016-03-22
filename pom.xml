@@ -4,7 +4,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>37-SNAPSHOT</version>
+  <version>36-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
@@ -64,7 +64,7 @@
     <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
     <maven-shade-plugin.version>2.4.2</maven-shade-plugin.version>
     <maven-site-plugin.version>3.4</maven-site-plugin.version>
-    <doxia-module-markdown.version>1.7</doxia-module-markdown.version>
+    <doxia-module-markdown.version>1.6</doxia-module-markdown.version>
     <maven-source-plugin.version>2.4</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
     <maven-wagon-ssh-plugin.version>2.4</maven-wagon-ssh-plugin.version>
