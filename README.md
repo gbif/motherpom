@@ -17,15 +17,19 @@ In a Maven pom.xml file use it as the parent pom using the current version of th
 ```
 
 ## GitHub Pages
-The `gh-pages` profile will be activated and will run as part of the `release:perform` goal.
-It is configured with the following:
+GitHub pages (used to display the JavaDocs on GitHub) are not generated automatically.
+This `motherpom` contains all the required plugins and configurations but in order to use it you need to add the following section to each projects where GitHub pages are needed:
+
 ```xml
-<plugin>
-...
-  <artifactId>maven-release-plugin</artifactId>
-  <configuration>
-    <goals>deploy site-deploy</goals>
-...
-    <releaseProfiles>gbif-release,gh-pages</releaseProfiles>
-...
+  <distributionManagement>
+    <site>
+      <id>gh-pages</id>
+      <url>http://gbif.github.io/${project.artifactId}/</url>
+    </site>
+  </distributionManagement>
+```
+
+The following goals can then be included in the release command (e.g. Jenkins Maven Release plugin):
+```
+site site:stage scm-publish:publish-scm
 ```
