@@ -378,7 +378,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>${maven-release-plugin.version}</version>
           <configuration>
-            <goals>deploy site site:stage scm-publish:publish-scm</goals>
+            <goals>deploy</goals>
             <preparationGoals>install</preparationGoals>
             <resume>false</resume>
             <useReleaseProfile>true</useReleaseProfile>
