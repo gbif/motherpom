@@ -34,7 +34,7 @@
     <cargo.context>${project.artifactId}</cargo.context>
 
     <github.global.server>github</github.global.server>
-
+    
     <!--
     Plugin versions.
     Check for available updates: mvn versions:display-plugin-updates
@@ -108,19 +108,6 @@
       <id>gbif-snapshot</id>
       <url>http://repository.gbif.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <site>
-      <id>gh-pages</id>
-      <!--
-      You need to override this default for multimodule projects!
-      For multi module proejcts please use this in the main pom:
-        <url>http://gbif.github.io/${project.artifactId}/</url>
-
-      and this for the submodules:
-        <url>http://gbif.github.io/${parent.artifactId}/${project.artifactId}/</url>
-
-      -->
-      <url>http://gbif.github.io/${project.artifactId}/</url>
-    </site>
   </distributionManagement>
 
   <build>
