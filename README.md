@@ -29,6 +29,16 @@ This `motherpom` contains all the required plugins and configurations but in ord
   </distributionManagement>
 ```
 
+**Multi-modules projects**
+In the main pom:
+```xml
+  <url>http://gbif.github.io/${project.artifactId}/</url>
+```
+and this for the submodules:
+```xml
+  <url>http://gbif.github.io/${parent.artifactId}/${project.artifactId}/</url>
+```
+
 The following goals can then be included in the release command (e.g. Jenkins Maven Release plugin):
 ```
 site site:stage scm-publish:publish-scm
