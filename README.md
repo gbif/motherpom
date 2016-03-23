@@ -17,7 +17,7 @@ In a Maven pom.xml file use it as the parent pom using the current version of th
 ```
 
 ## GitHub Pages
-GitHub pages (used to display the JavaDocs on GitHub) are not generated automatically.
+GitHub pages (used to display the JavaDocs on GitHub) are not generated automatically (see [Issue #1](https://github.com/gbif/motherpom/issues/1)).
 This `motherpom` contains all the required plugins and configurations but in order to use it you need to add the following section to each projects where GitHub pages are needed:
 
 ```xml
