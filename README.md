@@ -46,3 +46,11 @@ The following goals can then be included in the release command (e.g. Jenkins Ma
 ```
 site site:stage scm-publish:publish-scm
 ```
+
+
+**Notes**
+It is possible to use the variable `${project.artifactId}` even if the project is stored on GitHub under another name.
+
+> On the other hand, the `<distributionManagement.url>` is used in a multi-module build to construct relative links between the generated sub-module sites. In a multi module build it is important for the parent and child modules to have different URLs. If they have the same URL, then links within the combined site will not work. Note that a proper URL should also be terminated by a slash ("/").
+
+Source: http://maven.apache.org/plugins/maven-site-plugin/faq.html#Use_of_url
