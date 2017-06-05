@@ -23,7 +23,11 @@
 
   <properties>
     <minimumMavenVersion>3.0</minimumMavenVersion>
+    <!-- All three of the following properties must be updated when changing the JDK level -->
     <jdkLevel>1.7</jdkLevel>
+    <animal-sniffer-signature.artifact>java17</animal-sniffer-signature.artifact>
+    <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -39,6 +43,7 @@
     Plugin versions.
     Check for available updates: mvn versions:display-plugin-updates
     -->
+    <animal-sniffer-plugin.version>1.15</animal-sniffer-plugin.version>
     <cargo-maven2-plugin.version>1.6.1</cargo-maven2-plugin.version>
     <jetty-maven-plugin.version>9.3.14.v20161028</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
@@ -50,6 +55,7 @@
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
     <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
+    <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
     <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
@@ -160,6 +166,19 @@
           </configuration>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>animal-sniffer-maven-plugin</artifactId>
+          <version>${animal-sniffer-plugin.version}</version>
+          <configuration>
+            <!-- This checks to ensure future JDK APIs are not used -->
+            <signature>
+              <groupId>org.codehaus.mojo.signature</groupId>
+              <artifactId>${animal-sniffer-signature.artifact}</artifactId>
+              <version>${animal-sniffer-signature.version}</version>
+            </signature>
+          </configuration>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>${maven-enforcer-plugin.version}</version>
@@ -174,13 +193,36 @@
                   <requireMavenVersion>
                     <version>[${minimumMavenVersion},)</version>
                   </requireMavenVersion>
+                  <!-- This checks to ensure previous JDK versions are not used -->
                   <requireJavaVersion>
                     <version>[${jdkLevel},)</version>
                   </requireJavaVersion>
                 </rules>
               </configuration>
             </execution>
+            <execution>
+              <id>enforce-bytecode-version</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <!-- This checks bytecode in dependencies for the expected classfile version -->
+                  <enforceBytecodeVersion>
+                    <maxJdkVersion>${jdkLevel}</maxJdkVersion>
+                  </enforceBytecodeVersion>
+                </rules>
+                <fail>true</fail>
+              </configuration>
+            </execution>
           </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>extra-enforcer-rules</artifactId>
+              <version>${extra-enforcer-rules.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
