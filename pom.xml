@@ -169,6 +169,15 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>animal-sniffer-maven-plugin</artifactId>
           <version>${animal-sniffer-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>enforce-jdk-api</id>
+              <phase>test</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
           <configuration>
             <!-- This checks to ensure future JDK APIs are not used -->
             <signature>
@@ -488,6 +497,7 @@
             <artifactId>maven-enforcer-plugin</artifactId>
             <executions>
               <execution>
+                <id>enforce-release-constraints</id>
                 <goals>
                   <goal>enforce</goal>
                 </goals>
