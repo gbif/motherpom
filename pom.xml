@@ -24,8 +24,8 @@
   <properties>
     <minimumMavenVersion>3.0</minimumMavenVersion>
     <!-- All three of the following properties must be updated when changing the JDK level -->
-    <jdkLevel>1.7</jdkLevel>
-    <animal-sniffer-signature.artifact>java17</animal-sniffer-signature.artifact>
+    <jdkLevel>1.8</jdkLevel>
+    <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
