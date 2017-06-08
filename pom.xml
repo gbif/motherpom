@@ -74,6 +74,9 @@
     <maven-wagon-plugin.version>2.10</maven-wagon-plugin.version>
     <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
     <versions-maven-plugin.version>2.3</versions-maven-plugin.version>
+
+    <!-- Override this in profiles to add arguments to surefire and failsafe -->
+    <extraSurefireArgs></extraSurefireArgs>
   </properties>
 
 
@@ -259,7 +262,7 @@
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <argLine>-Xmx256m</argLine>
+            <argLine>-Xmx256m ${extraSurefireArgs}</argLine>
             <runOrder>random</runOrder>
           </configuration>
         </plugin>
@@ -388,7 +391,7 @@
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <argLine>-Xmx256m</argLine>
+            <argLine>-Xmx256m ${extraSurefireArgs}</argLine>
             <runOrder>random</runOrder>
           </configuration>
         </plugin>
@@ -641,6 +644,14 @@
         </plugins>
       </build>
     </profile>
-
+    <profile>
+      <id>java-9-surefire</id>
+      <activation>
+        <jdk>[1.9,)</jdk>
+      </activation>
+      <properties>
+        <extraSurefireArgs>--add-modules java.xml.bind</extraSurefireArgs>
+      </properties>
+    </profile>
   </profiles>
 </project>
