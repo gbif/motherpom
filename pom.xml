@@ -18,11 +18,16 @@
   </scm>
 
   <properties>
-    <minimumMavenVersion>3.0</minimumMavenVersion>
+    <!-- Minimum Maven version, used by maven-enforcer-plugin to fail if earlier versions are used -->
+    <minimumMavenVersion>3.2.2</minimumMavenVersion>
+
     <!-- All three of the following properties must be updated when changing the JDK level -->
     <jdkLevel>1.8</jdkLevel>
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
+
+    <!-- Override this in profiles to add arguments to surefire and failsafe -->
+    <extraSurefireArgs></extraSurefireArgs>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -35,18 +40,15 @@
 
     <github.global.server>github</github.global.server>
     
-    <!--
-    Plugin versions.
-    Check for available updates: mvn versions:display-plugin-updates
-    -->
+    <!-- Plugin versions. -->
     <animal-sniffer-plugin.version>1.15</animal-sniffer-plugin.version>
-    <cargo-maven2-plugin.version>1.6.1</cargo-maven2-plugin.version>
-    <jetty-maven-plugin.version>9.3.14.v20161028</jetty-maven-plugin.version>
+    <cargo-maven2-plugin.version>1.6.3</cargo-maven2-plugin.version>
+    <jetty-maven-plugin.version>9.3.20.v20170531</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
     <maven-archetype-plugin.version>3.0.1</maven-archetype-plugin.version>
     <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
     <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>3.0.1</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
@@ -70,10 +72,7 @@
     <maven-wagon-ssh-plugin.version>2.12</maven-wagon-ssh-plugin.version>
     <maven-wagon-plugin.version>2.10</maven-wagon-plugin.version>
     <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
-    <versions-maven-plugin.version>2.3</versions-maven-plugin.version>
-
-    <!-- Override this in profiles to add arguments to surefire and failsafe -->
-    <extraSurefireArgs></extraSurefireArgs>
+    <versions-maven-plugin.version>2.4</versions-maven-plugin.version>
   </properties>
 
 
