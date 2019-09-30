@@ -41,7 +41,7 @@
     <github.global.server>github</github.global.server>
     
     <!-- Plugin versions. -->
-    <animal-sniffer-plugin.version>1.15</animal-sniffer-plugin.version>
+    <animal-sniffer-plugin.version>1.18</animal-sniffer-plugin.version>
     <cargo-maven2-plugin.version>1.6.3</cargo-maven2-plugin.version>
     <jetty-maven-plugin.version>9.3.20.v20170531</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
@@ -220,7 +220,7 @@
                     <maxJdkVersion>${jdkLevel}</maxJdkVersion>
                   </enforceBytecodeVersion>
                 </rules>
-                <fail>true</fail>
+                <fail>false</fail>
               </configuration>
             </execution>
           </executions>
