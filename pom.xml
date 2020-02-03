@@ -42,6 +42,7 @@
     <!-- Plugin versions -->
     <animal-sniffer-plugin.version>1.18</animal-sniffer-plugin.version>
     <doxia-module-markdown.version>1.7</doxia-module-markdown.version>
+    <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
     <jetty-maven-plugin.version>9.3.20.v20170531</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
@@ -53,7 +54,6 @@
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
     <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-    <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
     <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
@@ -84,11 +84,6 @@
     <name>Global Biodiversity Information Facility</name>
     <url>http://www.gbif.org</url>
   </organization>
-
-  <issueManagement>
-    <system>JIRA</system>
-    <url>http://dev.gbif.org/issues/browse/POR</url>
-  </issueManagement>
 
   <repositories>
     <repository>
