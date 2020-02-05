@@ -56,7 +56,7 @@ This project uses spotless-maven-plugin and requires some configuration files. T
 - [gbif.importorder](./gbif.importorder) overrides default google package import order (for spotless-maven-plugin).
 - [gbif-lecense-header](./gbif-license-header) provides default license header (for spotless-maven-plugin).
 - [google-style.xml](./google-style.xml) java google code style, should be imported to IDE as a default one (Intellij IDEA 2019.3.2): Preferences --> Editor --> Code Style --> Import scheme (gear next to 'Scheme' dropdown) --> Intellij IDEA code style XML. This actions may differ in a later Intellij IDEA versions.
-- [.editorconfig](./.editorconfig) formatting properties which overrides some inconvenient google ones (e.g. static imports at the beginning of imports list).
+- [.editorconfig](./.editorconfig) formatting properties which overrides some inconvenient google ones (e.g. static imports at the beginning of imports list). Make sure editorconfig file is enabled in IDE: Preferences --> Editor --> Code Style --> General --> Enable EditorConfig support.
 
 ## GitHub Pages
 GitHub pages (used to display the JavaDocs on GitHub) are not generated automatically (see [Issue #1](https://github.com/gbif/motherpom/issues/1)).
