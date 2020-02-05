@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.gbif</groupId>
@@ -26,55 +28,62 @@
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
-    <!-- Override this in profiles to add arguments to surefire and failsafe -->
-    <extraSurefireArgs />
+    <!-- Override these in profiles to add arguments to surefire and failsafe -->
+    <extraSurefireArgs/>
+    <extraFailsafeArgs/>
 
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Override this property in project/module to contain the main directory path of the project -->
+    <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
+    <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
+    <main.basedir/>
 
+    <!-- Encoding -->
+    <encoding>UTF-8</encoding>
+    <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+    <!-- Checkstyle -->
+    <plexus-compiler-javac-errorprone.version>2.8.3</plexus-compiler-javac-errorprone.version>
+    <error_prone_core.version>2.3.2</error_prone_core.version>
+    <google-java-format.version>1.7</google-java-format.version>
+
+    <!-- Others -->
     <release.tagNameBase>${project.artifactId}</release.tagNameBase>
-
-    <cargo.containerId>tomcat7x</cargo.containerId>
-    <cargo.containerType>remote</cargo.containerType>
-    <cargo.context>${project.artifactId}</cargo.context>
-
     <github.global.server>github</github.global.server>
-    
-    <!-- Plugin versions. -->
+
+    <!-- Plugin versions -->
     <animal-sniffer-plugin.version>1.18</animal-sniffer-plugin.version>
-    <cargo-maven2-plugin.version>1.6.3</cargo-maven2-plugin.version>
+    <doxia-module-markdown.version>1.7</doxia-module-markdown.version>
+    <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
     <jetty-maven-plugin.version>9.3.20.v20170531</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
     <maven-archetype-plugin.version>3.0.1</maven-archetype-plugin.version>
-    <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
-    <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
-    <maven-dependency-plugin.version>3.0.1</maven-dependency-plugin.version>
+    <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-    <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
-    <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
+    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+    <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-    <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-    <maven-javadoc-plugin.version>3.0.0-M1</maven-javadoc-plugin.version>
+    <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+    <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     <maven-jdeps-plugin.version>3.0.0</maven-jdeps-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
     <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-    <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+    <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
     <maven-scm-plugin.version>1.9.5</maven-scm-plugin.version>
     <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
-    <maven-shade-plugin.version>3.0.0</maven-shade-plugin.version>
-    <maven-site-plugin.version>3.6</maven-site-plugin.version>
-    <doxia-module-markdown.version>1.7</doxia-module-markdown.version>
-    <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-    <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
-    <maven-wagon-ssh-plugin.version>2.12</maven-wagon-ssh-plugin.version>
-    <maven-wagon-plugin.version>2.10</maven-wagon-plugin.version>
-    <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
+    <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
+    <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
+    <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
     <versions-maven-plugin.version>2.4</versions-maven-plugin.version>
   </properties>
-
 
   <licenses>
     <license>
@@ -89,15 +98,21 @@
     <url>http://www.gbif.org</url>
   </organization>
 
-  <issueManagement>
-    <system>JIRA</system>
-    <url>http://dev.gbif.org/issues/browse/POR</url>
-  </issueManagement>
-
   <repositories>
     <repository>
       <id>gbif-all</id>
       <url>http://repository.gbif.org/content/groups/gbif</url>
+    </repository>
+    <repository>
+      <id>gbif-thirdparty</id>
+      <url>http://repository.gbif.org/content/repositories/thirdparty/</url>
+    </repository>
+    <repository>
+      <id>cloudera-release</id>
+      <url>http://repository.cloudera.com/artifactory/cloudera-repos/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
   </repositories>
 
@@ -113,15 +128,6 @@
   </distributionManagement>
 
   <build>
-    <extensions>
-      <extension>
-        <!-- add support for ssh/scp -->
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>${maven-wagon-ssh-plugin.version}</version>
-      </extension>
-    </extensions>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -129,11 +135,13 @@
           <artifactId>maven-archetype-plugin</artifactId>
           <version>${maven-archetype-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
           <version>${maven-clean-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -143,18 +151,66 @@
             <target>${jdkLevel}</target>
             <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
+            <compilerId>javac-with-errorprone</compilerId>
+            <forceJavacCompilerUse>true</forceJavacCompilerUse>
+            <compilerArgs>
+              <arg>-XepExcludedPaths:.*/src/main/java-generated/.*</arg>
+              <arg>-XepDisableWarningsInGeneratedCode</arg>
+              <arg>-Xep:MissingOverride:ERROR</arg>
+              <arg>-Xep:ParameterName:OFF</arg>
+            </compilerArgs>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.plexus</groupId>
+              <artifactId>plexus-compiler-javac-errorprone</artifactId>
+              <version>${plexus-compiler-javac-errorprone.version}</version>
+            </dependency>
+            <!-- Override plexus-compiler-javac-errorprone's dependency on Errorprone with the latest version -->
+            <dependency>
+              <groupId>com.google.errorprone</groupId>
+              <artifactId>error_prone_core</artifactId>
+              <version>${error_prone_core.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>spotless-check</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <java>
+              <licenseHeader>
+                <file>${main.basedir}/gbif-license-header</file>
+              </licenseHeader>
+              <googleJavaFormat>
+                <version>${google-java-format.version}</version>
+                <style>GOOGLE</style>
+              </googleJavaFormat>
+              <removeUnusedImports/>
+              <importOrder>
+                <file>${main.basedir}/gbif.importorder</file>
+              </importOrder>
+            </java>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${maven-dependency-plugin.version}</version>
-        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>${maven-deploy-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>
@@ -164,6 +220,7 @@
             <downloadJavadocs>true</downloadJavadocs>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -186,6 +243,7 @@
             </signature>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
@@ -232,10 +290,11 @@
             </dependency>
           </dependencies>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
+          <version>${maven-failsafe-plugin.version}</version>
           <executions>
             <execution>
               <id>integration-test</id>
@@ -258,26 +317,24 @@
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <argLine>-Xmx256m ${extraSurefireArgs}</argLine>
+            <argLine>-Xmx256m ${extraFailsafeArgs}</argLine>
             <runOrder>random</runOrder>
             <trimStackTrace>false</trimStackTrace>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>${maven-install-plugin.version}</version>
         </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>wagon-maven-plugin</artifactId>
-          <version>${maven-wagon-plugin.version}</version>
-        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
           <version>${maven-shade-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -306,6 +363,7 @@
             </execution>
           </executions>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
@@ -314,11 +372,13 @@
             <additionalparam>-Xdoclint:none</additionalparam>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jdeps-plugin</artifactId>
           <version>${maven-jdeps-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
@@ -343,13 +403,15 @@
             </dependency>
           </dependencies>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
           <version>${maven-scm-publish-plugin.version}</version>
           <configuration>
             <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}</checkinComment>
+            <checkinComment>Publishing Site Docs for ${project.artifactId}:${project.version}
+            </checkinComment>
             <skipDeletedFiles>false</skipDeletedFiles>
             <!-- publish to same git repo as code, just use a different branch -->
             <pubScmUrl>${project.scm.connection}</pubScmUrl>
@@ -357,16 +419,19 @@
             <scmBranch>gh-pages</scmBranch>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
           <version>${maven-scm-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>${maven-resources-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
@@ -381,6 +446,7 @@
             </execution>
           </executions>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -398,31 +464,25 @@
             <trimStackTrace>false</trimStackTrace>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>${maven-war-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
-          <version>${cargo-maven2-plugin.version}</version>
-        </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
           <version>${versions-maven-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.liquibase</groupId>
           <artifactId>liquibase-maven-plugin</artifactId>
           <version>${liquibase-maven-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
           <version>${jetty-maven-plugin.version}</version>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
@@ -444,10 +504,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jdeps-plugin</artifactId>
       </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -465,6 +527,7 @@
           <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
@@ -479,6 +542,7 @@
           </reportSet>
         </reportSets>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -494,7 +558,6 @@
           <quiet>true</quiet>
           <linksource>true</linksource>
           <show>public</show>
-          <aggregate>false</aggregate>
         </configuration>
       </plugin>
     </plugins>
@@ -534,6 +597,7 @@
               </rules>
             </configuration>
           </plugin>
+
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
             <executions>
@@ -546,6 +610,7 @@
               </execution>
             </executions>
           </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
@@ -564,6 +629,7 @@
               </execution>
             </executions>
           </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-scm-publish-plugin</artifactId>
@@ -577,76 +643,6 @@
             </executions>
             <!-- do not publish submodules -->
             <inherited>false</inherited>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-  <!-- profile to deploy web applications to our staging server -->
-  <profile>
-    <!--
-      To use it define a <server> and a <profile> in your Maven settings.xml file like this:
-
-        <profile>
-          <id>deploy-boma</id>
-          <properties>
-            <cargo.deploy-settings>gbif-boma</cargo.deploy-settings>
-            <cargo.containerId>tomcat5x</cargo.containerId>
-          </properties>
-        </profile>
-
-        <server>
-          <id>gbif-boma</id>
-          <configuration>
-            <cargo.remote.uri>http://boma.gbif.org/manager</cargo.tomcat.manager.url>
-            <cargo.remote.username></cargo.remote.username>
-            <cargo.remote.password></cargo.remote.password>
-          </configuration>
-        </server>
-
-      You can then deploy: mvn cargo:redeploy -Pdeploy-boma
-
-      The context is your artifactId but it can be overridden by the property cargo.context.
-
-      Notice that this will automatically skip unless for all projects without a src/main/webapp.
-      See http://dev.gbif.org/issues/browse/GBIFMPOM-8
-    -->
-      <id>war-deploy</id>
-      <activation>
-        <file>
-          <exists>src/main/webapp</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-maven2-plugin</artifactId>
-            <version>${cargo-maven2-plugin.version}</version>
-
-            <configuration>
-              <container>
-                <containerId>${cargo.containerId}</containerId>
-                <type>${cargo.containerType}</type>
-              </container>
-
-              <configuration>
-                <type>runtime</type>
-
-                <properties>
-                  <cargo.server.settings>${cargo.deploy-settings}</cargo.server.settings>
-                </properties>
-              </configuration>
-
-              <deployables>
-                <deployable>
-                  <properties>
-                    <context>${cargo.context}</context>
-                  </properties>
-                </deployable>
-              </deployables>
-
-            </configuration>
           </plugin>
         </plugins>
       </build>
