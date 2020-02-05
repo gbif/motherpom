@@ -28,10 +28,6 @@
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
-    <!-- Override these in profiles to add arguments to surefire and failsafe -->
-    <extraSurefireArgs/>
-    <extraFailsafeArgs/>
-
     <!-- Override this property in project/module to contain the main directory path of the project -->
     <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
     <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
@@ -46,6 +42,19 @@
     <plexus-compiler-javac-errorprone.version>2.8.3</plexus-compiler-javac-errorprone.version>
     <error_prone_core.version>2.3.2</error_prone_core.version>
     <google-java-format.version>1.7</google-java-format.version>
+
+    <!-- Sonar -->
+    <sonar.language>java</sonar.language>
+    <sonar.jacoco.reportPaths>${jacoco.merged.output.file}</sonar.jacoco.reportPaths>
+    <sonar.projectName/>
+
+    <!-- JaCoCo -->
+    <coverage.dir>${project.basedir}/../target/coverage</coverage.dir>
+    <coverage.report.it.dir>${project.basedir}/../target/site/jacoco-it</coverage.report.it.dir>
+    <coverage.report.ut.dir>${project.basedir}/../target/site/jacoco-ut</coverage.report.ut.dir>
+    <jacoco.it.output.file>${coverage.dir}/jacoco-it.exec</jacoco.it.output.file>
+    <jacoco.ut.output.file>${coverage.dir}/jacoco-ut.exec</jacoco.ut.output.file>
+    <jacoco.merged.output.file>${coverage.dir}/jacoco.exec</jacoco.merged.output.file>
 
     <!-- Others -->
     <release.tagNameBase>${project.artifactId}</release.tagNameBase>
@@ -69,10 +78,10 @@
     <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
-    <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
     <maven-jdeps-plugin.version>3.0.0</maven-jdeps-plugin.version>
     <maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
-    <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+    <maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
     <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
@@ -324,10 +333,83 @@
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <argLine>-Xmx256m ${extraFailsafeArgs}</argLine>
+            <argLine>${failsafeArgLine}</argLine>
             <runOrder>random</runOrder>
             <trimStackTrace>false</trimStackTrace>
+            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <configuration>
+            <append>true</append>
+          </configuration>
+          <executions>
+            <execution>
+              <id>prepare-agent-ut</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+              <configuration>
+                <destFile>${jacoco.ut.output.file}</destFile>
+                <propertyName>surefireArgLine</propertyName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>report-ut-coverage</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+              <configuration>
+                <dataFile>${jacoco.ut.output.file}</dataFile>
+                <outputDirectory>${coverage.report.ut.dir}</outputDirectory>
+              </configuration>
+            </execution>
+            <execution>
+              <id>prepare-agent-it</id>
+              <goals>
+                <goal>prepare-agent-integration</goal>
+              </goals>
+              <phase>package</phase>
+              <configuration>
+                <destFile>${jacoco.it.output.file}</destFile>
+                <propertyName>failsafeArgLine</propertyName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>report-it-coverage</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>report-integration</goal>
+              </goals>
+              <configuration>
+                <dataFile>${jacoco.it.output.file}</dataFile>
+                <outputDirectory>${coverage.report.it.dir}</outputDirectory>
+              </configuration>
+            </execution>
+            <execution>
+              <id>merge-exec-files</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>merge</goal>
+              </goals>
+              <configuration>
+                <fileSets>
+                  <fileSet>
+                    <directory>${coverage.dir}</directory>
+                    <includes>
+                      <include>*.exec</include>
+                    </includes>
+                  </fileSet>
+                </fileSets>
+                <destFile>${jacoco.merged.output.file}</destFile>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>
@@ -466,9 +548,12 @@
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <argLine>-Xmx256m ${extraSurefireArgs}</argLine>
+            <argLine>${surefireArgLine}</argLine>
             <runOrder>random</runOrder>
             <trimStackTrace>false</trimStackTrace>
+            <excludes>
+              <exclude>**/*IT.java</exclude>
+            </excludes>
           </configuration>
         </plugin>
 

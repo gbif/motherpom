@@ -43,11 +43,7 @@ In subsubmodule:
     <main.basedir>${project.parent.parent.basedir}</main.basedir>
   </properties>
 ```
-and so on. This property helps to get files with an import order configuration and a license header.
-
-- extraSurefireArgs allows to pass parameters to surefire-maven-plugin (required for unit test code coverage).
-
-- extraFailsafeArgs allows to pass parameters to failsafe-maven-plugin (required for integration test code coverage).
+and so on. These properties help to get files with an import order configuration and a license header.
 
 ## Configure project to use motherpom
 
