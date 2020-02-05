@@ -58,6 +58,22 @@ This project uses spotless-maven-plugin and requires some configuration files. T
 - [google-style.xml](./google-style.xml) java google code style, should be imported to IDE as a default one: Preferences --> Editor --> Code Style --> Import scheme (gear next to 'Scheme' dropdown) --> Intellij IDEA code style XML.
 - [.editorconfig](./.editorconfig) formatting properties which overrides some inconvenient google ones (e.g. static imports at the beginning of imports list). Make sure editorconfig file is enabled in IDE: Preferences --> Editor --> Code Style --> General --> Enable EditorConfig support.
 
+## Manual use of Spotless
+
+Check that project follows code style conventions:
+
+```
+mvn spotless:check
+```
+
+Fix code style violations:
+
+```
+mvn spotless:apply
+```
+
+For more information see [documentation](https://github.com/diffplug/spotless/tree/master/plugin-maven).
+
 ## GitHub Pages
 GitHub pages (used to display the JavaDocs on GitHub) are not generated automatically (see [Issue #1](https://github.com/gbif/motherpom/issues/1)).
 This `motherpom` contains all the required plugins and configurations but in order to use it you need to add the following section to each projects where GitHub pages are needed:
