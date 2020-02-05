@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.gbif</groupId>
@@ -22,18 +24,18 @@
     <minimumMavenVersion>3.2.2</minimumMavenVersion>
 
     <!-- All three of the following properties must be updated when changing the JDK level -->
-    <jdkLevel>1.8</jdkLevel>
+    <java.version>1.8</java.version>
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
     <!-- Override these in profiles to add arguments to surefire and failsafe -->
-    <extraSurefireArgs />
-    <extraFailsafeArgs />
+    <extraSurefireArgs/>
+    <extraFailsafeArgs/>
 
     <!-- Override this property in project/module to contain the main directory path of the project -->
     <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
     <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
-    <main.basedir />
+    <main.basedir/>
 
     <!-- Encoding -->
     <encoding>UTF-8</encoding>
@@ -73,14 +75,15 @@
     <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-    <maven-scm-plugin.version>1.9.5</maven-scm-plugin.version>
+    <maven-scm-plugin.version>1.9.2</maven-scm-plugin.version>
     <maven-scm-publish-plugin.version>1.1</maven-scm-publish-plugin.version>
     <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
     <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
-    <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+    <maven-source-plugin.version>2.4</maven-source-plugin.version>
     <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
     <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
-    <versions-maven-plugin.version>2.4</versions-maven-plugin.version>
+    <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
   </properties>
 
   <licenses>
@@ -145,8 +148,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
-            <source>${jdkLevel}</source>
-            <target>${jdkLevel}</target>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
             <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
             <compilerId>javac-with-errorprone</compilerId>
@@ -174,6 +177,12 @@
         </plugin>
 
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven-dependency-plugin.version}</version>
+        </plugin>
+
+        <plugin>
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
           <version>${spotless-maven-plugin.version}</version>
@@ -195,7 +204,7 @@
                 <version>${google-java-format.version}</version>
                 <style>GOOGLE</style>
               </googleJavaFormat>
-              <removeUnusedImports />
+              <removeUnusedImports/>
               <importOrder>
                 <file>${main.basedir}/gbif.importorder</file>
               </importOrder>
@@ -259,7 +268,7 @@
                   </requireMavenVersion>
                   <!-- This checks to ensure previous JDK versions are not used -->
                   <requireJavaVersion>
-                    <version>[${jdkLevel},)</version>
+                    <version>[${java.version},)</version>
                   </requireJavaVersion>
                 </rules>
               </configuration>
@@ -273,7 +282,7 @@
                 <rules>
                   <!-- This checks bytecode in dependencies for the expected classfile version -->
                   <enforceBytecodeVersion>
-                    <maxJdkVersion>${jdkLevel}</maxJdkVersion>
+                    <maxJdkVersion>${java.version}</maxJdkVersion>
                   </enforceBytecodeVersion>
                 </rules>
                 <fail>false</fail>
@@ -584,7 +593,7 @@
                   <version>[${minimumMavenVersion},)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[${jdkLevel},)</version>
+                  <version>[${java.version},)</version>
                 </requireJavaVersion>
                 <requirePluginVersions>
                   <message>Best Practice is to always define plugin versions!</message>
@@ -644,6 +653,16 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>local-sonar</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+      </properties>
     </profile>
   </profiles>
 </project>
