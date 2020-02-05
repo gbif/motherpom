@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>41-SNAPSHOT</version>
+  <version>41</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
@@ -16,7 +14,7 @@
     <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
     <url>https://github.com/gbif/motherpom</url>
     <developerConnection>scm:git:git@github.com:gbif/motherpom.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>motherpom-41</tag>
   </scm>
 
   <properties>
@@ -31,7 +29,7 @@
     <!-- Override this property in project/module to contain the main directory path of the project -->
     <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
     <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
-    <main.basedir/>
+    <main.basedir />
 
     <!-- Encoding -->
     <encoding>UTF-8</encoding>
@@ -46,7 +44,7 @@
     <!-- Sonar -->
     <sonar.language>java</sonar.language>
     <sonar.jacoco.reportPaths>${jacoco.merged.output.file}</sonar.jacoco.reportPaths>
-    <sonar.projectName/>
+    <sonar.projectName />
 
     <!-- JaCoCo -->
     <coverage.dir>${project.basedir}/../target/coverage</coverage.dir>
@@ -213,7 +211,7 @@
                 <version>${google-java-format.version}</version>
                 <style>GOOGLE</style>
               </googleJavaFormat>
-              <removeUnusedImports/>
+              <removeUnusedImports />
               <importOrder>
                 <file>${main.basedir}/gbif.importorder</file>
               </importOrder>
