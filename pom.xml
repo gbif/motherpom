@@ -324,12 +324,6 @@
             </execution>
           </executions>
           <configuration>
-            <!--
-            Use a single forked process to execute all tests
-            See https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
-            -->
-            <forkCount>1</forkCount>
-            <reuseForks>false</reuseForks>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <argLine>${failsafeArgLine}</argLine>
             <runOrder>random</runOrder>
