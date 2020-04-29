@@ -43,6 +43,7 @@
 
     <!-- Sonar -->
     <sonar.language>java</sonar.language>
+    <sonar.jacoco.reportPaths>${jacoco.merged.output.file}</sonar.jacoco.reportPaths>
     <sonar.projectName />
 
     <!-- JaCoCo -->
@@ -347,6 +348,7 @@
                 <goal>prepare-agent</goal>
               </goals>
               <configuration>
+                <destFile>${jacoco.ut.output.file}</destFile>
                 <propertyName>surefireArgLine</propertyName>
               </configuration>
             </execution>
@@ -356,6 +358,10 @@
               <goals>
                 <goal>report</goal>
               </goals>
+              <configuration>
+                <dataFile>${jacoco.ut.output.file}</dataFile>
+                <outputDirectory>${coverage.report.ut.dir}</outputDirectory>
+              </configuration>
             </execution>
             <execution>
               <id>prepare-agent-it</id>
@@ -364,6 +370,7 @@
               </goals>
               <phase>package</phase>
               <configuration>
+                <destFile>${jacoco.it.output.file}</destFile>
                 <propertyName>failsafeArgLine</propertyName>
               </configuration>
             </execution>
@@ -373,6 +380,28 @@
               <goals>
                 <goal>report-integration</goal>
               </goals>
+              <configuration>
+                <dataFile>${jacoco.it.output.file}</dataFile>
+                <outputDirectory>${coverage.report.it.dir}</outputDirectory>
+              </configuration>
+            </execution>
+            <execution>
+              <id>merge-exec-files</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>merge</goal>
+              </goals>
+              <configuration>
+                <fileSets>
+                  <fileSet>
+                    <directory>${coverage.dir}</directory>
+                    <includes>
+                      <include>*.exec</include>
+                    </includes>
+                  </fileSet>
+                </fileSets>
+                <destFile>${jacoco.merged.output.file}</destFile>
+              </configuration>
             </execution>
           </executions>
         </plugin>
