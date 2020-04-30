@@ -743,5 +743,14 @@
         <sonar.host.url>http://localhost:9000</sonar.host.url>
       </properties>
     </profile>
+    <profile>
+      <id>spotless-check</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <spotless.check.skip>false</spotless.check.skip>
+      </properties>
+    </profile>
   </profiles>
 </project>
