@@ -164,7 +164,7 @@
             <compilerArgs>
               <arg>-XepExcludedPaths:.*/src/main/java-generated/.*</arg>
               <arg>-XepDisableWarningsInGeneratedCode</arg>
-              <arg>-Xep:MissingOverride:ERROR</arg>
+              <arg>-Xep:MissingOverride:WARN</arg>
               <arg>-Xep:ParameterName:OFF</arg>
             </compilerArgs>
           </configuration>
@@ -716,6 +716,22 @@
             </executions>
             <!-- do not publish submodules -->
             <inherited>false</inherited>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <configuration>
+                  <doclint>none</doclint>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
