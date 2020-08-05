@@ -5,8 +5,10 @@
 
   <bannerLeft>
     <name>GBIF</name>
-    <src>http://cdn.gbif.org/img/header/logo.png</src>
-    <href>http://www.gbif.org/</href>
+    <src>https://rs.gbif.org/style/logo-gbif.svg</src>
+    <alt>Global Biodiversity Information Facility</alt>
+    <width>276</width>
+    <href>https://www.gbif.org/</href>
   </bannerLeft>
 
   <publishDate position="right"/>
@@ -19,28 +21,19 @@
     <version>1.9</version>
   </skin>
 
-  <custom>
-    <fluidoSkin>
-      <twitter>
-        <user>GBIF</user>
-      </twitter>
-    </fluidoSkin>
-  </custom>
-
   <body>
     <breadcrumbs>
-      <item name="GBIF" href="http://www.gbif.org"/>
+      <item name="GBIF" href="https://www.gbif.org/"/>
     </breadcrumbs>
 
     <menu ref="modules" inherit="bottom"/>
     <menu ref="reports" inherit="bottom"/>
 
     <menu name="Developer Resources" inherit="bottom">
-      <item name="Github" href="http://www.github.com/gbif"/>
-      <item name="Developer Blog" href="http://gbif.blogspot.de/"/>
-      <item name="GBIF API documentation" href="http://www.gbif.org/developer"/>
-      <item name="GBIF API JavaDocs" href="http://gbif.github.io/gbif-api/apidocs/"/>
-      <item name="DwC API JavaDocs" href="http://gbif.github.io/dwc-api/apidocs/"/>
+      <item name="GitHub" href="https://github.com/gbif"/>
+      <item name="GBIF API documentation" href="https://www.gbif.org/developer/summary"/>
+      <item name="GBIF API JavaDocs" href="https://gbif.github.io/gbif-api/apidocs/"/>
+      <item name="Darwin Core API JavaDocs" href="https://gbif.github.io/dwc-api/apidocs/"/>
     </menu>
   </body>
 </project>

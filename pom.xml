@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
-  <url>http://github.org/gbif/${project.artifactId}</url>
+  <url>https://github.org/gbif/${project.artifactId}</url>
 
   <scm>
     <connection>scm:git:git@github.com:gbif/motherpom.git</connection>
@@ -103,7 +103,7 @@
 
   <organization>
     <name>Global Biodiversity Information Facility</name>
-    <url>http://www.gbif.org</url>
+    <url>https://www.gbif.org</url>
   </organization>
 
   <repositories>
