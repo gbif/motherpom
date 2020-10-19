@@ -63,7 +63,7 @@
     <doxia-module-markdown.version>1.7</doxia-module-markdown.version>
     <extra-enforcer-rules.version>1.0-beta-6</extra-enforcer-rules.version>
     <jetty-maven-plugin.version>9.3.20.v20170531</jetty-maven-plugin.version>
-    <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
+    <liquibase-maven-plugin.version>3.8.9</liquibase-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
     <maven-archetype-plugin.version>3.0.1</maven-archetype-plugin.version>
     <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
