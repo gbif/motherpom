@@ -26,8 +26,6 @@
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
-    <javac.version>9+181-r4173-1</javac.version>
-
     <!-- Override this property in project/module to contain the main directory path of the project -->
     <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
     <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
@@ -39,9 +37,9 @@
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
     <!-- Checkstyle -->
-    <error_prone_core.version>2.5.1</error_prone_core.version>
     <google-java-format.version>1.7</google-java-format.version>
-    <lombok.version>1.18.16</lombok.version>
+    <plexus-compiler-javac-errorprone.version>2.8.6</plexus-compiler-javac-errorprone.version>
+    <error_prone_core.version>2.3.2</error_prone_core.version>
 
     <!-- Sonar -->
     <sonar.language>java</sonar.language>
@@ -92,6 +90,7 @@
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.9.0</spotless-maven-plugin.version>
     <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
+
   </properties>
 
   <licenses>
@@ -158,29 +157,30 @@
           <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
-            <encoding>${encoding}</encoding>
             <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
-            <fork>true</fork>
+            <compilerId>javac-with-errorprone</compilerId>
             <forceJavacCompilerUse>true</forceJavacCompilerUse>
             <compilerArgs>
-              <arg>-J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar</arg>
-              <arg>-XDcompilePolicy=simple</arg>
-              <arg>-Xplugin:ErrorProne -XepExcludedPaths:.*/src/main/java-generated/.* -XepDisableWarningsInGeneratedCode -Xep:MissingOverride:ERROR -Xep:ParameterName:OFF</arg>
+              <arg>-XepExcludedPaths:.*/src/main/java-generated/.*</arg>
+              <arg>-XepDisableWarningsInGeneratedCode</arg>
+              <arg>-Xep:MissingOverride:ERROR</arg>
+              <arg>-Xep:ParameterName:OFF</arg>
             </compilerArgs>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>com.google.errorprone</groupId>
-                <artifactId>error_prone_core</artifactId>
-                <version>${error_prone_core.version}</version>
-              </path>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-              </path>
-            </annotationProcessorPaths>
           </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.plexus</groupId>
+              <artifactId>plexus-compiler-javac-errorprone</artifactId>
+              <version>${plexus-compiler-javac-errorprone.version}</version>
+            </dependency>
+            <!-- Override plexus-compiler-javac-errorprone's dependency on Errorprone with the latest version -->
+            <dependency>
+              <groupId>com.google.errorprone</groupId>
+              <artifactId>error_prone_core</artifactId>
+              <version>${error_prone_core.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
 
         <plugin>
