@@ -41,7 +41,7 @@
     <!-- Checkstyle -->
     <error_prone_core.version>2.5.1</error_prone_core.version>
     <google-java-format.version>1.7</google-java-format.version>
-    <lombok.version>1.18.18</lombok.version>
+    <lombok.version>1.18.16</lombok.version>
 
     <!-- Sonar -->
     <sonar.language>java</sonar.language>
