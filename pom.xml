@@ -40,6 +40,8 @@
     <google-java-format.version>1.7</google-java-format.version>
     <plexus-compiler-javac-errorprone.version>2.8.6</plexus-compiler-javac-errorprone.version>
     <error_prone_core.version>2.3.2</error_prone_core.version>
+    <!-- Use to add additional exclusions Add a | the beginning -->
+    <errorprone.excludedpaths></errorprone.excludedpaths>
 
     <!-- Sonar -->
     <sonar.language>java</sonar.language>
@@ -162,7 +164,7 @@
             <compilerId>javac-with-errorprone</compilerId>
             <forceJavacCompilerUse>true</forceJavacCompilerUse>
             <compilerArgs>
-              <arg>-XepExcludedPaths:.*/src/main/java-generated/.*</arg>
+              <arg>-XepExcludedPaths:.*/src/main/java-generated/.*${errorprone.excludedpaths}</arg>
               <arg>-XepDisableWarningsInGeneratedCode</arg>
               <arg>-Xep:MissingOverride:ERROR</arg>
               <arg>-Xep:ParameterName:OFF</arg>
