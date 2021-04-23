@@ -426,6 +426,14 @@
               </manifest>
             </archive>
           </configuration>
+          <executions>
+            <execution>
+              <id>attach-test-jar</id>
+              <goals>
+                <goal>test-jar</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>
