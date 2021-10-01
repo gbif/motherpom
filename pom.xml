@@ -195,7 +195,6 @@
           <version>${spotless-maven-plugin.version}</version>
           <configuration>
             <java>
-              <ratchetFrom>origin/master</ratchetFrom>
               <licenseHeader>
                 <file>${spotless.files.path}/gbif-license-header</file>
               </licenseHeader>
