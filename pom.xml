@@ -26,10 +26,8 @@
     <animal-sniffer-signature.artifact>java18</animal-sniffer-signature.artifact>
     <animal-sniffer-signature.version>1.0</animal-sniffer-signature.version>
 
-    <!-- Override this property in project/module to contain the main directory path of the project -->
-    <!-- In a root module: <main.basedir>${project.basedir}</main.basedir> -->
-    <!-- In a submodule: <main.basedir>${project.parent.basedir}</main.basedir> and etc. -->
-    <main.basedir />
+    <!-- Spotless files: license header, import order etc. -->
+    <spotless.files.path>https://raw.githubusercontent.com/gbif/motherpom/master</spotless.files.path>
 
     <!-- Encoding -->
     <encoding>UTF-8</encoding>
@@ -104,22 +102,22 @@
   </licenses>
 
   <organization>
-    <name>Global Biodiversity Information Facility</name>
+    <name>Global Biodiversity Information Facility (GBIF)</name>
     <url>https://www.gbif.org</url>
   </organization>
 
   <repositories>
     <repository>
       <id>gbif-all</id>
-      <url>http://repository.gbif.org/content/groups/gbif/</url>
+      <url>https://repository.gbif.org/content/groups/gbif/</url>
     </repository>
     <repository>
       <id>gbif-thirdparty</id>
-      <url>http://repository.gbif.org/content/repositories/thirdparty/</url>
+      <url>https://repository.gbif.org/content/repositories/thirdparty/</url>
     </repository>
     <repository>
       <id>cloudera-repos</id>
-      <url>http://repository.cloudera.com/artifactory/cloudera-repos/</url>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -199,11 +197,11 @@
             <java>
               <ratchetFrom>origin/master</ratchetFrom>
               <licenseHeader>
-                <file>${main.basedir}/gbif-license-header</file>
+                <file>${spotless.files.path}/gbif-license-header</file>
               </licenseHeader>
               <removeUnusedImports />
               <importOrder>
-                <file>${main.basedir}/gbif.importorder</file>
+                <file>${spotless.files.path}/gbif.importorder</file>
               </importOrder>
             </java>
           </configuration>
@@ -724,15 +722,6 @@
       </build>
     </profile>
 
-    <profile>
-      <id>local-sonar</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-      </properties>
-    </profile>
     <profile>
       <id>spotless-check</id>
       <activation>
