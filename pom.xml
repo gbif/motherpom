@@ -19,7 +19,7 @@
 
   <properties>
     <!-- Minimum Maven version, used by maven-enforcer-plugin to fail if earlier versions are used -->
-    <minimumMavenVersion>3.9.4</minimumMavenVersion>
+    <minimumMavenVersion>3.8.5</minimumMavenVersion>
 
     <!-- All three of the following properties must be updated when changing the JDK level -->
     <java.version>11</java.version>
