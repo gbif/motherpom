@@ -61,7 +61,7 @@
     <!-- Plugin versions -->
     <animal-sniffer-plugin.version>1.23</animal-sniffer-plugin.version>
     <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
-    <extra-enforcer-rules.version>1.4</extra-enforcer-rules.version>
+    <extra-enforcer-rules.version>1.8.0</extra-enforcer-rules.version>
     <jetty-maven-plugin.version>11.0.1</jetty-maven-plugin.version>
     <liquibase-maven-plugin.version>4.3.2</liquibase-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
