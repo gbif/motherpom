@@ -24,6 +24,8 @@
     <!-- All three of the following properties must be updated when changing the JDK level -->
     <java.version>11</java.version>
 
+    <java.maxVersion>17</java.maxVersion>
+
     <!-- Spotless files: license header, import order etc. -->
     <spotless.files.path>https://raw.githubusercontent.com/gbif/motherpom/master</spotless.files.path>
 
@@ -271,7 +273,7 @@
                 <rules>
                   <!-- This checks bytecode in dependencies for the expected classfile version -->
                   <enforceBytecodeVersion>
-                    <maxJdkVersion>${java.version}</maxJdkVersion>
+                    <maxJdkVersion>${java.maxVersion}</maxJdkVersion>
                   </enforceBytecodeVersion>
                 </rules>
                 <fail>false</fail>
