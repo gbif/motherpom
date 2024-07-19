@@ -4,7 +4,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>motherpom</artifactId>
-  <version>59-SNAPSHOT</version>
+  <version>58-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>GBIF Mother POM</name>
